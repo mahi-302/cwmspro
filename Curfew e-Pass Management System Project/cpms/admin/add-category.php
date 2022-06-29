@@ -1,3 +1,27 @@
+<?php
+session_start();
+error_reporting(0);
+include('includes/dbconnection.php');
+if (strlen($_SESSION['cpmsaid']==0)) {
+  header('location:logout.php');
+  } else{
+    if(isset($_POST['submit']))
+  {
+
+$mpmsaid=$_SESSION['cpmsaid'];
+ $catname=$_POST['catname'];
+$ret="select CategoryName from tblcategory where CategoryName=:catname";
+ $query= $dbh -> prepare($ret);
+$query->bindParam(':catname',$catname,PDO::PARAM_STR);
+
+$query-> execute();
+     $results = $query -> fetchAll(PDO::FETCH_OBJ);
+     if($query -> rowCount() == 0)
+{
+$sql="insert into tblcategory(CategoryName)values(:catname)";
+$query=$dbh->prepare($sql);
+$query->bindParam(':catname',$catname,PDO::PARAM_STR);
+
  $query->execute();
 
    $LastInsertId=$dbh->lastInsertId();
