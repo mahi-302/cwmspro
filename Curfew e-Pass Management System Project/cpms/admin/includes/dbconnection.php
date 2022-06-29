@@ -2,7 +2,7 @@
 // DB credentials.
 define('DB_HOST','localhost');
 define('DB_USER','admin');
-define('DB_PASS','mahesh');
+define('DB_PASS','maheshkumar');
 define('DB_NAME','cpms');
 // Establish database connection.
 try
