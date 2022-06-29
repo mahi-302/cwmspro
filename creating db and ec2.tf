@@ -2,19 +2,19 @@ provider "aws" {
   region = "us-east-1"
 }
 resource "aws_instance" "proj2" {
-  depends_on = [aws_db_instance.default]
+  depends_on = [aws_db_instance.def]
   ami           = "ami-052efd3df9dad4825"
   instance_type = "t2.micro"
   subnet_id   = "subnet-0fec44469e446977c"
   key_name = "awsall"
-  user_data = templatefile("${path.module}/userdata.tftpl", {endpoint = aws_db_instance.default.endpoint,password = aws_db_instance.default.password})
+  user_data = templatefile("${path.module}/userdata.tftpl", {endpoint = aws_db_instance.def.endpoint,password = aws_db_instance.def.password})
    iam_instance_profile = "ec2_full"
   security_groups = ["sg-08625c34c68a22785"]
   tags = {
     Name = "cpms"
   }
 }
-resource "aws_db_instance" "default" {
+resource "aws_db_instance" "def" {
   allocated_storage    = 10
   engine               = "mysql"
   engine_version       = "5.7"
@@ -23,7 +23,7 @@ resource "aws_db_instance" "default" {
   identifier           = "myrdb"
   username             = "admin"
   password             = "maheshkumar"
-  parameter_group_name = "default.mysql5.7"
+  parameter_group_name = "def.mysql5.7"
   skip_final_snapshot  = true
   publicly_accessible  = true
   vpc_security_group_ids = ["sg-08625c34c68a22785"]
